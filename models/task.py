@@ -9,7 +9,7 @@ class Task(EndpointsModel):
                               'notes')
 
     createdOn = ndb.DateTimeProperty(auto_now_add=True)
-    author = ndb.StringProperty()
+    author = ndb.UserProperty(auto_current_user_add=True)
     title = ndb.StringProperty()
     description = ndb.StringProperty()
     dueDate = ndb.StringProperty()

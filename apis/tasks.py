@@ -6,9 +6,10 @@ from models import Task
 
 @endpoints.api(name="tasks", version="v1", description="Tasks API")
 class TasksApi(remote.Service):
-    @Task.method(path="task/create", name="create")
+    @Task.method(user_required=True, path="task/create", name="create")
     def addTask(self, task):
         """Method to create/update a task."""
+        task.author = endpoints.get_current_user()
         task.put()
         return task
 
