@@ -1,12 +1,12 @@
 import endpoints
 from protorpc import remote
 
-from models import UnconfirmedVolunteer
+from models import Volunteer
 
 
 @endpoints.api(name="volunteer", version="v1", description="Volunteer API")
 class VolunteersApi(remote.Service):
-    @UnconfirmedVolunteer.method(user_required=True, path="volunteer/apply", name="apply")
+    @Volunteer.method(user_required=True, path="volunteer/apply", name="apply")
     def applyVolunteer(self, volunteer):
         """Method for new volunteers to apply to org."""
         user = endpoints.get_current_user()
