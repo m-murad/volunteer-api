@@ -11,6 +11,11 @@ OAUTH_SCOPES = (
 
 @endpoints.api(name="volunteer", version="v1", description="Volunteer API")
 class VolunteersApi(remote.Service):
+    @Volunteer.query_method(user_required=True, path="volunteer/get/all", name="get_all",
+                            query_fields=("limit", "order", "pageToken"))
+    def getAllVolunteers(self, query):
+        return query
+
     @Volunteer.method(user_required=True, path="volunteer/apply", name="apply")
     def applyVolunteer(self, volunteer):
         """Method for new volunteers to apply to org."""
@@ -29,6 +34,9 @@ class VolunteersApi(remote.Service):
         is_admin = oauth.is_current_user_admin(_format_oauth_scopes(OAUTH_SCOPES))
         if not is_admin:
             raise endpoints.UnauthorizedException("You are not allowed to make this request.")
+        volunteer.confirmed = True
+        volunteer.confirmed_by = user
+        return volunteer
 
 
 def _format_oauth_scopes(oauth_scopes):
