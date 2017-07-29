@@ -37,6 +37,7 @@ class VolunteersApi(remote.Service):
             raise endpoints.UnauthorizedException("You are not allowed to make this request.")
         volunteer.confirmed = True
         volunteer.confirmed_by = user
+        volunteer.put()
         return volunteer
 
     @Volunteer.query_method(user_required=True, path="volunteer/get/unconfirmed", name="get_unconfirmed",
