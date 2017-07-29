@@ -14,6 +14,7 @@ class VolunteersApi(remote.Service):
     @Volunteer.query_method(user_required=True, path="volunteer/get/all", name="get_all",
                             query_fields=("limit", "order", "pageToken"))
     def getAllVolunteers(self, query):
+        """Returns a list of all the volunteers."""
         return query
 
     @Volunteer.method(user_required=True, path="volunteer/apply", name="apply")
@@ -37,6 +38,20 @@ class VolunteersApi(remote.Service):
         volunteer.confirmed = True
         volunteer.confirmed_by = user
         return volunteer
+
+    @Volunteer.query_method(user_required=True, path="volunteer/get/unconfirmed", name="get_unconfirmed",
+                            query_fields=("limit", "order", "pageToken"))
+    def getUnconfirmedVolunteers(self, query):
+        """Returns a list of unconfirmed volunteers."""
+        query = Volunteer.query(Volunteer.confirmed == False)
+        return query
+
+    @Volunteer.query_method(user_required=True, path="volunteer/get/confirmed", name="get_confirmed",
+                            query_fields=("limit", "order", "pageToken"))
+    def getConfirmedVolunteers(self, query):
+        """Returns a list of confirmed volunteers."""
+        query = Volunteer.query(Volunteer.confirmed == True)
+        return query
 
 
 def _format_oauth_scopes(oauth_scopes):
