@@ -6,7 +6,7 @@ from endpoints_proto_datastore.ndb.model import EndpointsModel
 class Task(EndpointsModel):
 
     _message_fields_schema = ('id', 'createdOn', 'author', 'title', 'description', 'dueDate', 'assigned', 'assignedTo',
-                              'notes')
+                              'notes', 'completed')
 
     createdOn = ndb.DateTimeProperty(auto_now_add=True)
     author = ndb.UserProperty(auto_current_user_add=True)
@@ -16,4 +16,5 @@ class Task(EndpointsModel):
     assigned = ndb.BooleanProperty()
     assignedTo = ndb.StringProperty()
     notes = ndb.StringProperty()
+    completed = ndb.BooleanProperty(default=False)
     # TODO: Add 'required=True'
