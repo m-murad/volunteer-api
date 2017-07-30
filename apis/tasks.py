@@ -9,7 +9,6 @@ class TasksApi(remote.Service):
     @Task.method(user_required=True, path="task/create", name="create")
     def addTask(self, task):
         """Method to create/update a task."""
-        task.author = endpoints.get_current_user()
         task.put()
         return task
 
