@@ -1,4 +1,4 @@
-application: volunteer-api
+application: api-volunteer
 version: 1
 runtime: python27
 api_version: 1
